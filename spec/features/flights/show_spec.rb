@@ -6,7 +6,7 @@ RSpec.describe "As a visitor to an individual flight page", type: :feature do
     @flight = @airline.flights.create!(number: "123", date: "01/26/2020", time: "2:00pm", departure_city: "Denver", arrival_city: "Dallas")
     @flight2 = @airline.flights.create!(number: "321", date: "01/27/2020", time: "3:00pm", departure_city: "Los Angeles", arrival_city: "New York")
     @pass1 = @flight.passengers.create!(name: 'Joe', age: 20)
-    @pass2 = @flight.passengers.create!(name: 'Jack', age: 25)
+    @pass2 = @flight.passengers.create!(name: 'Jack', age: 17)
     @pass3 = Passenger.create!(name: 'Jill', age: 22)
   end
 
@@ -28,6 +28,13 @@ RSpec.describe "As a visitor to an individual flight page", type: :feature do
     expect(page).to_not have_content(@flight2.time)
     expect(page).to_not have_content(@flight2.departure_city)
     expect(page).to_not have_content(@flight2.arrival_city)
+  end
+
+  it 'should show how many adults and minors are on the flight' do
+    visit "/flights/#{@flight.id}"
+
+    expect(page).to have_content("Adults: 1")
+    expect(page).to have_content("Minors: 1")
   end
 
 end
