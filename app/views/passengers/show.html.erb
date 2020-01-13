@@ -5,4 +5,5 @@
     <% @passenger.flights.each do |flight| %>
     <%= link_to "#{flight.number}", "/flights/#{flight.id}" %>
     <% end %>
+    <%= link_to "Add Flight", "/passengers/#{@passenger.id}/edit" %>
 </article>
